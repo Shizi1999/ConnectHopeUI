@@ -1,0 +1,17 @@
+https://www.ketnoihyvong.me/
+https://www.ketnoihyvong.me/login
+https://www.ketnoihyvong.me/register
+https://www.ketnoihyvong.me/forget-password
+https://www.ketnoihyvong.me/reset-password
+https://www.ketnoihyvong.me/admin-user
+https://www.ketnoihyvong.me/user-information
+https://www.ketnoihyvong.me/create-update-organization
+https://www.ketnoihyvong.me/create-update-person
+https://www.ketnoihyvong.me/admin-people
+https://www.ketnoihyvong.me/admin-organization
+https://www.ketnoihyvong.me/contact
+https://www.ketnoihyvong.me/personal
+https://www.ketnoihyvong.me/organization
+https://www.ketnoihyvong.me/me
+https://www.ketnoihyvong.me/me-manage-personal
+https://www.ketnoihyvong.me/me-manage-organization
