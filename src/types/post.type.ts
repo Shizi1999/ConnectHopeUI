@@ -6,4 +6,5 @@ export interface Post {
   shortDescription?: string;
   censored: boolean;
   author: string;
+  views?: number;
 }
