@@ -77,8 +77,11 @@ export default function Contact() {
             </p>
             <ul className='leading-6 mt-5 text-xl'>
               <li className='mt-2'>Địa chỉ:Công Viên Phần Mêm Quang Trung</li>
-              <li className='mt-2'>Điện thoại: (+84)394252528.</li>
-              <li className='mt-2'>Email: example.@gmail.com</li>
+              <li className='mt-2'>Điện thoại: 03003002610</li>
+              <li className='mt-2'>STK MB - Bank: 03003002610, người nhận Đỗ Minh Mẫn</li>
+              <li>
+                <img src={images.qr} alt='' />
+              </li>
             </ul>
           </div>
         </div>

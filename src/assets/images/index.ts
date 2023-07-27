@@ -8,6 +8,7 @@ import icon from '~/assets/images/icon.png';
 import icontien from '~/assets/images/icontien.png';
 import logonotext from '~/assets/images/logonotext.png';
 import formbg2 from '~/assets/images/formbg2.png';
+import qr from '~/assets/images/qr.png';
 
-const images = { formBg, salebanner, logo, tremocoi, vogiacu, icon, icontien, logonotext, formbg2 };
+const images = { formBg, salebanner, logo, tremocoi, vogiacu, icon, icontien, logonotext, formbg2, qr };
 export default images;
