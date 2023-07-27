@@ -90,6 +90,12 @@ a.active > .active-route {
 }
 
 @media (min-width: 350px) {
+  .xshome {
+    width: 100%;
+  }
+}
+
+@media (min-width: 350px) {
   .xsft {
     width: 100px;
     height: 120px;

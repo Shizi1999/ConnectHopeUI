@@ -18,7 +18,9 @@ export default function Footer() {
             </div>
             <p>Trường cao đẳng FPT Polytechnic cơ sở 3 Hồ Chí Minh</p>
             <p>Điện thoại: (+84) 028 3911 8430 - 093 305 9191</p>
-            <p>Email: info@webtretho.com</p>
+            <p>Ủng hộ: </p>
+            <p>STK MB - Bank: 03003002610</p>
+            <p>Người nhận: Đỗ Minh Mẫn</p>
             <p>© 2023 ConnectHope-HTDH. Tất cả các quyền được bảo lưu.</p>
           </div>
         </div>

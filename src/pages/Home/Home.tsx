@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { Col, Row } from 'antd';
 import images from '~/assets/images';
 import SlickCarousel from '~/components/SlickCarousel/SlickCarousel';
@@ -29,8 +30,9 @@ function Home() {
         <div className='container bg-gray-100 my-4 '>
           <div className='rounded-md shadow-sm'>
             <div className='grid grid-cols-1 md:grid-cols-12 gap-5 bg-white py-5 px-5'>
-              <div className='md:col-span-6'>
+              <div className='md:col-span-6 flex flex-col justify-center items-center'>
                 <img src={images.logo} alt='' className='md:w-full mx-auto' />
+                <img src={images.qr} alt='' className='w-25 h-25' />
               </div>
               <div className='md:col-span-6'>
                 <div className='font-bold text-2xl mb-5 md:text-4xl md:leading-10'>
@@ -125,7 +127,12 @@ function Home() {
           >
             {list.map((imageUrl, index) => (
               <div key={index}>
-                <img src={imageUrl} alt={`Slide ${index + 1}`} style={{ width: '100%', height: '260px' }} />
+                <img
+                  src={imageUrl}
+                  alt={`Slide ${index + 1}`}
+                  // style={{ width: '245px', height: '260px' }}
+                  className='xshome  w-[245px] h-[260px]'
+                />
               </div>
             ))}
           </SlickCarousel>
