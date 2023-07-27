@@ -1,12 +1,13 @@
-import { Col, Empty, Row } from 'antd';
+import { Avatar, Col, Empty, Image, Row } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import homeApi from '~/api/home.api';
 import { Post } from '~/types/post.type';
-import dayjs from 'dayjs';
-import { generatePostUrl, getIdFromName } from '~/utils/utils';
+import { generatePostUrl, getColorByName, getIdFromName } from '~/utils/utils';
 import PostSkeleton from './components/PostSkeleton';
+import { User } from '~/types/user.type';
+import dayjs from 'dayjs';
 
 const total = 8;
 export default function Post() {
@@ -16,6 +17,7 @@ export default function Post() {
   }
   const [randomPost, setRandomPost] = useState<Post[]>([]);
   const [post, setPost] = useState<Post>();
+  const [author, setAuthor] = useState<User>();
   const { isLoading } = useQuery({
     queryKey: ['fetchPost', id],
     queryFn: () => {
@@ -26,11 +28,33 @@ export default function Post() {
     }
   });
 
+  const fetchAuthor = useMutation({
+    mutationFn: (id: string) => {
+      return homeApi.getAuthor(id);
+    },
+    onSuccess: (res) => {
+      if (res.data.success) {
+        setAuthor(res.data.data);
+      }
+    }
+  });
+
+  useEffect(() => {
+    if (post) {
+      fetchAuthor.mutate(post.author);
+    } else {
+      setAuthor(undefined);
+    }
+  }, [post]);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
+    if (id && !id.includes('id')) {
+      homeApi.updateView(id);
+    }
   }, [id]);
 
   const fetchAllPost = useQuery({
@@ -59,13 +83,6 @@ export default function Post() {
     }
   }, [fetchAllPost.data]);
 
-  const postImage = useMemo(() => {
-    if (post) {
-      return 'avatar' in post ? post.avatar : 'thumbnail' in post ? post.thumbnail : undefined;
-    }
-    return undefined;
-  }, [post]);
-
   if (!id) {
     return (
       <div className='container my-10 py-24 border  px-5 bg-neutral-100  rounded-md shadow-md'>
@@ -75,58 +92,105 @@ export default function Post() {
   }
 
   return (
-    <div className='container-fluid mb-10 leading-7'>
+    <div className='container-fluid py-8 leading-7'>
       {isLoading ? (
         <PostSkeleton />
       ) : (
-        <Row gutter={[8, 8]}>
-          <Col xs={24} sm={24} md={24} lg={16} xl={16}>
-            {post && (
-              <>
-                <div className='font-medium  py-4 px-5 mt-10 '>
-                  <div className='font-normal' dangerouslySetInnerHTML={{ __html: post.description || '' }}></div>
+        <div>
+          {post && (
+            <div className='my-2 rounded-md overflow-hidden'>
+              <img className=' aspect-video' src={post.thumbnail} />
+            </div>
+          )}
+          <Row gutter={[8, 8]}>
+            <Col xs={24} sm={24} md={24} lg={16} xl={16}>
+              {post && (
+                <>
                   <div className=''>
-                    <div className='py-4'>
-                      <div className='mb-4 flex'>
-                        <span className='w-24 me-2 inline-block font-semibold'>Người đăng:</span>
-                        <span className='flex-1'>{post.title}</span>
+                    <div className='font-bold text-gray-700 text-3xl mb-4'>{post.title}</div>
+                    {!author && (
+                      <div className='flex items-center my-4 flex-wrap italic text-gray-500'>
+                        <div>Ngày đăng: {dayjs(post.updatedAt).format('DD-MM-YYYY')}</div>
+                        <span className='mx-2'>|</span>
+                        <div>Lượt xem: {post.views}</div>
                       </div>
-                      {post.shortDescription && <div className='mb-4 flex'>{post.shortDescription}</div>}
-                    </div>
+                    )}
+                    {post.shortDescription && (
+                      <div className='rounded-md bg-red-50 px-4 py-4 my-2 border-l-4 border-pink-600'>
+                        {author && (
+                          <div className='flex items-center my-4'>
+                            <div className='me-2'>
+                              {author?.avatar ? (
+                                <Avatar size={56} src={author?.avatar} />
+                              ) : (
+                                <Avatar
+                                  size={56}
+                                  style={{
+                                    backgroundColor: getColorByName(author?.fullname || (author?.email as string))
+                                  }}
+                                >
+                                  {author?.fullname?.charAt(0) || author?.email?.charAt(0)}
+                                </Avatar>
+                              )}
+                            </div>
+                            <div className='flex flex-col justify-between'>
+                              <div>{author?.fullname ? author.fullname : 'Ẩn danh'}</div>
+                              <div className='flex items-center flex-wrap italic text-gray-500'>
+                                <div>Ngày đăng: {dayjs(post.updatedAt).format('DD-MM-YYYY')}</div>
+                                <span className='mx-2'>|</span>
+                                <div>Lượt xem: {post.views}</div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {post.shortDescription}
+                      </div>
+                    )}
+                    <div className='font-normal' dangerouslySetInnerHTML={{ __html: post.description || '' }}></div>
+                  </div>
+                </>
+              )}
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+              {post && (
+                <div className='w-full mt-2'>
+                  <h4 className='font-bold text-lg mb-4'>Bài viết liên quan</h4>
+                  <div>
+                    <Row gutter={[8, 8]}>
+                      {Array.isArray(randomPost) &&
+                        randomPost
+                          ?.filter((_, index) => index < 3)
+                          .map((post) => (
+                            <Col xs={24} sm={12} md={12} lg={24} xl={24} key={post._id}>
+                              <Link to={generatePostUrl(post)} state={{ post }}>
+                                <div className='px-1 py-2 rounded-md text-gray-500 border-b'>
+                                  <div className='font-bold text-gray-800 text-base my-1 line-clamp-1 mb-2'>
+                                    {post.title}
+                                  </div>
+                                  <Row gutter={[8, 8]} className='items-start'>
+                                    <Col span={8}>
+                                      <div className='rounded-md overflow-hidden mt-2.5'>
+                                        <img src={post.thumbnail} className='aspect-video' />
+                                      </div>
+                                    </Col>
+                                    <Col span={16}>
+                                      <div className='flex flex-col h-full justify-between '>
+                                        <div className='line-clamp-[3]'>{post.shortDescription}</div>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                  <div className='mt-2'>Ngày đăng: {dayjs(post.updatedAt).format('DD-MM-YYYY')}</div>
+                                </div>
+                              </Link>
+                            </Col>
+                          ))}
+                    </Row>
                   </div>
                 </div>
-              </>
-            )}
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-            {post && (
-              <div className='my-10 w-full '>
-                <h4 className='font-bold text-lg mb-4'>Bài viết liên quan</h4>
-                <div>
-                  {randomPost.map((post) => (
-                    <Link className='my-2 ' key={post._id} to={generatePostUrl(post)} state={{ post }}>
-                      <div className='text-gray-800  px-1 py-2 rounded-md'>
-                        <Row gutter={[8, 8]} className='items-center'>
-                          <Col span={6}>
-                            <div className='flex items-center justify-center'>
-                              <img className='block' src={post.thumbnail || ''} />
-                            </div>
-                          </Col>
-                          <Col span={18}>
-                            <div className='flex flex-col justify-between'>
-                              <span className='font-bold  my-1'>{post.title}</span>
-                              <div className='line-clamp-2'>&ldquo;{post.shortDescription}&rdquo;</div>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </Col>
-        </Row>
+              )}
+            </Col>
+          </Row>
+        </div>
       )}
     </div>
   );

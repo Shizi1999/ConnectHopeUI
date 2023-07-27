@@ -7,4 +7,5 @@ export interface Post {
   censored: boolean;
   author: string;
   views?: number;
+  updatedAt?: string;
 }

@@ -49,6 +49,7 @@ function CreateAndUpdatePost() {
     if (post) {
       const { formValues, thumbnailFile } = convertPostToFormValue(post);
       form.setFieldsValue(formValues);
+      setDescription(formValues?.description || '');
       setThumbnailFile(thumbnailFile);
     }
   }, [post]);
@@ -61,8 +62,12 @@ function CreateAndUpdatePost() {
         }
         return false;
       },
-      onChange: ({ fileList: newFileList }) => {
-        setThumbnailFile(newFileList);
+      onChange: ({ fileList: newFileList, file }) => {
+        if (newFileList.length > 1) {
+          setThumbnailFile([newFileList.at(-1) as UploadFile]);
+        } else {
+          setThumbnailFile(newFileList);
+        }
       },
       fileList: thumbnail,
       listType: 'picture-card',
@@ -81,7 +86,9 @@ function CreateAndUpdatePost() {
     onSuccess: (res) => {
       showMessageRespone(res.data);
       if (res.data.success) {
-        setDescription('');
+        if (isCreateMode) {
+          setDescription('');
+        }
         form.resetFields();
         setThumbnailFile([]);
         queryClient.invalidateQueries(['getAllPostByAdmin']);
