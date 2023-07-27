@@ -88,3 +88,10 @@ a.active > .active-route {
     width: 150px;
   }
 }
+
+@media (min-width: 350px) {
+  .xsft {
+    width: 100px;
+    height: 120px;
+  }
+}

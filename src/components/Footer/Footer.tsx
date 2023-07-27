@@ -1,4 +1,5 @@
 import React from 'react';
+import logonotext from '~/assets/images/logonotext.png';
 
 export default function Footer() {
   return (
@@ -6,17 +7,13 @@ export default function Footer() {
       <div className='container'>
         <div className='mr-4 mb-5 border-b-2'></div>
         <div className='flex'>
-          <div className='lg:h-36 lg:w-36 mr-5 sm:w-20  sm:h-16'>
-            <img
-              className='w-full h-full '
-              src='https://media.istockphoto.com/id/1004629556/vi/vec-to/logo-doanh-nghi%E1%BB%87p-%C4%91o%C3%A0n-k%E1%BA%BFt-l%C3%A0m-vi%E1%BB%87c-nh%C3%B3m.jpg?s=612x612&w=0&k=20&c=SufJESCnr3Wm3HF4z0BM26F_6IVIhHg3dw4pFnfwgBU='
-              alt=''
-            />
+          <div className='lg:h-36 lg:w-36 mr-5 sm:w-20  sm:h-16 xsft'>
+            <img className='w-full h-full ' src={logonotext} alt='' />
           </div>
           <div className='lg:col-span-4'>
             <div className='flex items-center'>
               <div className='flex  text-lg'>
-                Nhóm thực hiện: <h1 className='px-2 font-bold '>Hành trình đồng hành</h1>
+                <div className=' font-bold '>Hành trình đồng hành</div>
               </div>
             </div>
             <p>Trường cao đẳng FPT Polytechnic cơ sở 3 Hồ Chí Minh</p>

@@ -107,7 +107,10 @@ export default function Header() {
         <div className='flex items-center sm:relative'>
           <div className='items-center text-center overflow-hidden'>
             <div className='w-16 h-16 rounded-full '>
-              <img className='w-full h-full ' src={images.logonotext} alt='' />
+              <Link to={path.home}>
+                {' '}
+                <img className='w-full h-full ' src={images.logonotext} alt='' />
+              </Link>
             </div>
           </div>
           <div className='flex-1 item-center '>
