@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { Avatar, Col, Empty, Image, Row } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -97,17 +98,15 @@ export default function Post() {
         <PostSkeleton />
       ) : (
         <div>
-          {post && (
-            <div className='my-2 rounded-md overflow-hidden'>
-              <img className=' aspect-video' src={post.thumbnail} />
-            </div>
-          )}
           <Row gutter={[8, 8]}>
             <Col xs={24} sm={24} md={24} lg={16} xl={16}>
               {post && (
                 <>
                   <div className=''>
                     <div className='font-bold text-gray-700 text-3xl mb-4'>{post.title}</div>
+                    <div className='my-2 rounded-md overflow-hidden '>
+                      <img className='w-full aspect-video' src={post.thumbnail} />
+                    </div>
                     {!author && (
                       <div className='flex items-center my-4 flex-wrap italic text-gray-500'>
                         <div>Ngày đăng: {dayjs(post.updatedAt).format('DD-MM-YYYY')}</div>
