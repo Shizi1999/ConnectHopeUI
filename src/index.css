@@ -79,7 +79,9 @@ a.active > .active-route {
 
   position: absolute;
 }
-
+.post-des img {
+  width: 100%;
+}
 #root {
   background-color: #fcfaf6;
 }
