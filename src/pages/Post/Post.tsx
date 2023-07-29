@@ -71,8 +71,10 @@ export default function Post() {
     while (randomPosts.length < n && copyPosts.length > 0) {
       const randomIndex = Math.floor(Math.random() * copyPosts.length);
       const randomPost = copyPosts[randomIndex];
-      randomPosts.push(randomPost);
-      copyPosts.splice(randomIndex, 1);
+      if (randomPost._id !== id) {
+        randomPosts.push(randomPost);
+        copyPosts.splice(randomIndex, 1);
+      }
     }
     return randomPosts;
   };
@@ -82,7 +84,7 @@ export default function Post() {
       const posts = getRandomPosts(fetchAllPost.data.data.data, 4);
       setRandomPost(posts);
     }
-  }, [fetchAllPost.data]);
+  }, [id]);
 
   if (!id) {
     return (
