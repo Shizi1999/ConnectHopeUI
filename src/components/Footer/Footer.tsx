@@ -10,7 +10,7 @@ export default function Footer() {
           <div className='lg:h-36 lg:w-36 mr-5 sm:w-20  sm:h-16 xsft'>
             <img className='w-full h-full ' src={logonotext} alt='' />
           </div>
-          <div className='lg:col-span-4'>
+          <div className='flex-1'>
             <div className='flex items-center'>
               <div className='flex  text-lg'>
                 <div className=' font-bold '>Hành trình đồng hành</div>
@@ -18,7 +18,6 @@ export default function Footer() {
             </div>
             <p>Trường cao đẳng FPT Polytechnic cơ sở 3 Hồ Chí Minh</p>
             <p>Điện thoại: (+84) 028 3911 8430 - 093 305 9191</p>
-            <p>Ủng hộ: </p>
             <p>STK MB - Bank: 03003002610</p>
             <p>Người nhận: Đỗ Minh Mẫn</p>
             <p>© 2023 ConnectHope-HTDH. Tất cả các quyền được bảo lưu.</p>
