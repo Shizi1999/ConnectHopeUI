@@ -62,7 +62,9 @@ export default function Post() {
     queryKey: ['fetchAllPost'],
     queryFn: () => {
       return homeApi.getAllPost();
-    }
+    },
+    staleTime: 60 * 60 * 1000,
+    retry: 2
   });
 
   const getRandomPosts = (posts: Post[], n: number): Post[] => {
