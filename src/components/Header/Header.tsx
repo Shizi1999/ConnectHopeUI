@@ -130,7 +130,7 @@ export default function Header() {
               <Search
                 loading={searchMutation.isLoading}
                 onSearch={handleSearch}
-                placeholder='Nhập tên cá nhân hoặc tổ chức'
+                placeholder='Nhập từ khoá tìm kiếm'
                 size='large'
                 style={{ width: 'full' }}
                 enterButton
