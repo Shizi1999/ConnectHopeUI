@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react/jsx-no-comment-textnodes */
 import { useQuery } from '@tanstack/react-query';
 import { Breadcrumb, Button, Card, Col, Row, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
@@ -14,7 +16,7 @@ interface PostListProps {
 }
 
 // eslint-disable-next-line react/prop-types
-const PostList: React.FC<PostListProps> = ({ rate = 16, fetchDataFn, title }) => {
+const PostList: React.FC<PostListProps> = ({ rate = 4, fetchDataFn, title }) => {
   const [total, setTotal] = useState(1);
   const { data, isLoading } = useQuery<Post[]>({
     queryKey: ['fetchPost'],
@@ -69,6 +71,7 @@ const PostList: React.FC<PostListProps> = ({ rate = 16, fetchDataFn, title }) =>
                               flexDirection: 'column'
                             }}
                           >
+                            {/* // eslint-disable-next-line jsx-a11y/alt-text */}
                             <img src={post.thumbnail} className='aspect-video' />
                             <span className='font-bold text-center my-1'>{post.title}</span>
                             <div className='line-clamp-[6]'>{post.shortDescription}</div>
@@ -115,7 +118,7 @@ const PostList: React.FC<PostListProps> = ({ rate = 16, fetchDataFn, title }) =>
           </Row>
         </Skeleton>
         <div className='mt-5 text-center py-2 px-2'>
-          {data?.length && data?.length > rate * total && <Button onClick={handleShowMore}>Show more</Button>}
+          {data?.length && data?.length > rate * total && <Button onClick={handleShowMore}>Xem thêm</Button>}
         </div>
       </div>
     </div>
