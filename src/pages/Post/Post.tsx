@@ -58,13 +58,21 @@ export default function Post() {
     }
   }, [id]);
 
-  const fetchAllPost = useQuery({
-    queryKey: ['fetchAllPost'],
+  useQuery({
+    queryKey: ['fetchAllPost', id],
     queryFn: () => {
       return homeApi.getAllPost();
     },
     staleTime: 60 * 60 * 1000,
-    retry: 2
+    retry: 2,
+    onSuccess: (res) => {
+      if (res.data.success) {
+        if (res?.data?.data) {
+          const posts = getRandomPosts([...res.data.data], 6);
+          setRandomPost(posts);
+        }
+      }
+    }
   });
 
   const getRandomPosts = (posts: Post[], n: number): Post[] => {
@@ -80,13 +88,6 @@ export default function Post() {
     }
     return randomPosts;
   };
-
-  useEffect(() => {
-    if (fetchAllPost.data) {
-      const posts = getRandomPosts(fetchAllPost.data.data.data, 4);
-      setRandomPost(posts);
-    }
-  }, [id]);
 
   if (!id) {
     return (
