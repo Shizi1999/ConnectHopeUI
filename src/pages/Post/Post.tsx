@@ -149,10 +149,7 @@ export default function Post() {
                         {post.shortDescription}
                       </div>
                     )}
-                    <div
-                      className='font-normal post-des'
-                      dangerouslySetInnerHTML={{ __html: post.description || '' }}
-                    ></div>
+                    <div className='font-normal' dangerouslySetInnerHTML={{ __html: post.description || '' }}></div>
                   </div>
                 </>
               )}
