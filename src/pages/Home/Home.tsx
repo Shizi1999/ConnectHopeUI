@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { Col, Row } from 'antd';
+import { Col, Row, Skeleton } from 'antd';
 import images from '~/assets/images';
 import SlickCarousel from '~/components/SlickCarousel/SlickCarousel';
 import list from '~/constant/list';

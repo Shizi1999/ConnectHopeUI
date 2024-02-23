@@ -68,26 +68,13 @@ export default function Post() {
     onSuccess: (res) => {
       if (res.data.success) {
         if (res?.data?.data) {
-          const posts = getRandomPosts([...res.data.data], 6);
-          setRandomPost(posts);
+          const posts = res.data.data as Post[];
+          setRandomPost(posts.filter((post) => post._id !== id));
         }
       }
     }
   });
 
-  const getRandomPosts = (posts: Post[], n: number): Post[] => {
-    const randomPosts: Post[] = [];
-    const copyPosts: Post[] = [...posts];
-    while (randomPosts.length < n && copyPosts.length > 0) {
-      const randomIndex = Math.floor(Math.random() * copyPosts.length);
-      const randomPost = copyPosts[randomIndex];
-      if (randomPost._id !== id) {
-        randomPosts.push(randomPost);
-        copyPosts.splice(randomIndex, 1);
-      }
-    }
-    return randomPosts;
-  };
 
   if (!id) {
     return (
